@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AppWill Free Valuation — Concept Prototype</title>
+  <style>
+    :root{
+      --bg:#f6f7f8; --card:#ffffff; --text:#15171a; --muted:#667085; --border:#e6e8ec;
+      --accent:#4f46e5; --accent2:#eef2ff; --ok:#067647;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 48px}
+    .notice{background:#fff8e6;border:1px solid #f1d88a;padding:12px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:22px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    h1{font-size:34px;line-height:1.15;margin:8px 0 10px}
+    h2{font-size:20px;margin:0 0 14px}
+    p{line-height:1.55}
+    .muted{color:var(--muted)}
+    .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .step-pill{border:1px solid var(--border);border-radius:999px;padding:7px 10px;font-size:12px;white-space:nowrap}
+    .progress{height:7px;background:#eef0f3;border-radius:999px;overflow:hidden;margin:24px 0 26px}
+    .progress>div{height:100%;width:25%;background:var(--accent);transition:.2s}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .full{grid-column:1/-1}
+    label{font-size:14px;font-weight:600}
+    input,select{width:100%;margin-top:7px;min-height:46px;padding:11px 12px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
+    input:focus,select:focus{outline:3px solid #e0e7ff;border-color:var(--accent)}
+    .radio{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer}
+    .radio input{width:auto;min-height:auto;margin-top:3px}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+    button{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;font:inherit}
+    .primary{background:var(--accent);color:white;margin-left:auto}
+    .secondary{background:white;border:1px solid var(--border)}
+    .result{background:var(--accent2);border-radius:16px;padding:22px;text-align:center}
+    .range{font-size:36px;font-weight:800;margin:8px 0}
+    .aside-item{padding:14px 0;border-bottom:1px solid var(--border)}
+    .aside-item:last-child{border-bottom:0}
+    .funnel{font-weight:700;line-height:1.9}
+    .success{color:var(--ok);font-weight:700;text-align:center;margin-top:12px}
+    .hidden{display:none}
+    .footer-note{font-size:12px;color:var(--muted);margin-top:14px}
+    @media (max-width:850px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.full{grid-column:auto}.top{flex-direction:column}h1{font-size:28px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="notice"><strong>Concept prototype for discussion — not an AppWill product.</strong> This mockup illustrates a possible evolution of the current Free Valuation flow for interview discussion.</div>
+
+    <div class="grid">
+      <main class="card">
+        <div class="top">
+          <div>
+            <div class="eyebrow">Free App Valuation</div>
+            <h1>How much could your app be worth?</h1>
+            <p class="muted">Answer a few questions to receive a preliminary valuation range.</p>
+          </div>
+          <div class="step-pill"><span id="stepLabel">Step 1</span> / 4</div>
+        </div>
+
+        <div class="progress"><div id="progressBar"></div></div>
+
+        <form id="form">
+          <section class="step" data-step="1">
+            <h2>Tell us about your product</h2>
+            <div class="fields">
+              <label>Product type
+                <select id="productType">
+                  <option>Mobile Game</option><option>Mobile App</option>
+                </select>
+              </label>
+              <label>Platform
+                <select id="platform">
+                  <option>iOS & Android</option><option>Android</option><option>iOS</option>
+                </select>
+              </label>
+              <label class="full">App / Game URL
+                <input id="url" type="url" placeholder="https://..." />
+              </label>
+              <label>Category
+                <select id="category">
+                  <option>Games</option><option>Entertainment</option><option>Productivity</option><option>Utilities</option><option>Other</option>
+                </select>
+              </label>
+              <label>Product age
+                <select id="age">
+                  <option>Less than 1 year</option><option>1–2 years</option><option>2–5 years</option><option>5+ years</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="step hidden" data-step="2">
+            <h2>Business performance</h2>
+            <p class="muted">These metrics help estimate the commercial potential of your asset.</p>
+            <div class="fields">
+              <label>Monthly revenue, $
+                <input id="revenue" type="number" min="0" value="12000" />
+              </label>
+              <label>Monthly net profit, $
+                <input id="profit" type="number" min="0" value="6000" />
+              </label>
+              <label>Revenue trend
+                <select id="trend">
+                  <option value="1.15">Growing</option><option value="1" selected>Stable</option><option value="0.82">Declining</option>
+                </select>
+              </label>
+              <label>Monthly active users
+                <input id="mau" type="number" min="0" value="45000" />
+              </label>
+            </div>
+          </section>
+
+          <section class="step hidden" data-step="3">
+            <h2>Your exit intention</h2>
+            <p class="muted">This helps prioritise the right next step for you.</p>
+            <label class="radio"><input type="radio" name="intent" value="now" checked><span><strong>Yes, now</strong><br><span class="muted">I am actively considering an exit</span></span></label>
+            <label class="radio"><input type="radio" name="intent" value="later"><span><strong>Maybe in 3–6 months</strong><br><span class="muted">I want to understand my options</span></span></label>
+            <label class="radio"><input type="radio" name="intent" value="curious"><span><strong>Just curious</strong><br><span class="muted">I only want to know what my asset could be worth</span></span></label>
+          </section>
+
+          <section class="step hidden" data-step="4">
+            <div class="result">
+              <div class="muted">Your preliminary valuation range</div>
+              <div class="range" id="valuationRange">$72,000 – $108,000</div>
+              <p class="muted">Illustrative estimate only. A professional review may consider market demand, comparable transactions and additional product metrics.</p>
+            </div>
+            <div class="fields" style="margin-top:18px">
+              <label>Name
+                <input id="name" type="text" placeholder="Your name" />
+              </label>
+              <label>Email
+                <input id="email" type="email" placeholder="you@email.com" />
+              </label>
+            </div>
+            <button type="button" class="primary" id="professional" style="width:100%;margin-top:18px">Get My Professional Valuation</button>
+            <div id="done" class="success hidden">Request captured for this prototype.</div>
+          </section>
+
+          <div class="actions">
+            <button type="button" class="secondary hidden" id="back">Back</button>
+            <button type="button" class="primary" id="next">Continue</button>
+          </div>
+        </form>
+        <div class="footer-note">Prototype logic is illustrative and is not intended to reproduce AppWill’s proprietary valuation methodology.</div>
+      </main>
+
+      <aside>
+        <div class="card">
+          <h2>Why this is stronger than a basic form</h2>
+          <div class="aside-item"><strong>1 · Curiosity</strong><p class="muted">The user gets immediate value: an estimated range.</p></div>
+          <div class="aside-item"><strong>2 · First-party data</strong><p class="muted">Revenue, profit, trend and product data improve qualification.</p></div>
+          <div class="aside-item"><strong>3 · Intent scoring</strong><p class="muted">“Sell now” can be prioritised over “just curious”.</p></div>
+          <div class="aside-item"><strong>4 · CRM nurture</strong><p class="muted">Not-ready sellers can be re-engaged later.</p></div>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <div class="eyebrow">Proposed funnel</div>
+          <div class="funnel" style="margin-top:12px">Valuation Start<br>↓<br>Valuation Complete<br>↓<br>Lead → MQL → Qualified Seller<br>↓<br>Listing → Deal</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+<script>
+(() => {
+  let step = 1;
+  const steps = [...document.querySelectorAll('.step')];
+  const next = document.getElementById('next');
+  const back = document.getElementById('back');
+  const progress = document.getElementById('progressBar');
+  const label = document.getElementById('stepLabel');
+  const range = document.getElementById('valuationRange');
+
+  const money = n => '$' + Math.round(n).toLocaleString('en-US');
+
+  function estimate(){
+    const profit = Math.max(0, Number(document.getElementById('profit').value) || 0);
+    const revenue = Math.max(0, Number(document.getElementById('revenue').value) || 0);
+    const trend = Number(document.getElementById('trend').value) || 1;
+    const base = Math.max(profit * 15, revenue * 4) * trend;
+    const mid = Math.max(5000, base);
+    range.textContent = money(mid * .8) + ' – ' + money(mid * 1.2);
+  }
+
+  function render(){
+    steps.forEach((el, i) => el.classList.toggle('hidden', i !== step - 1));
+    label.textContent = 'Step ' + step;
+    progress.style.width = (step * 25) + '%';
+    back.classList.toggle('hidden', step === 1);
+    next.classList.toggle('hidden', step === 4);
+    if (step === 4) estimate();
+  }
+
+  next.addEventListener('click', () => { if (step < 4) { step++; render(); } });
+  back.addEventListener('click', () => { if (step > 1) { step--; render(); } });
+
+  document.getElementById('professional').addEventListener('click', () => {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const done = document.getElementById('done');
+    done.textContent = (!name || !email || !email.includes('@'))
+      ? 'Please enter your name and a valid email.'
+      : 'Request captured for this prototype.';
+    done.classList.remove('hidden');
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
